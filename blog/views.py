@@ -1,13 +1,14 @@
 # blog/views.py
 from django.shortcuts import render, get_object_or_404, redirect
 from django.utils import timezone
-from .models import Blog
+from .models import Blog,Comment
 from django.core.paginator import Paginator
+from .forms import BlogPost,CommentForm
 
 # Create your views here.
 def home(request):
         blogs = Blog.objects 
-        blog_list = Blog.objects.all().reverse() # 블로그 객체 다 가져오기
+        blog_list = Blog.objects.all().order_by('-id') # 블로그 객체 다 가져오기
         paginator = Paginator(blog_list, 6) # 3개씩 잘라내기
         page = request.GET.get('page') # 페이지 번호 알아오기
         if page is None:
@@ -40,3 +41,32 @@ def create(request):
         blog.pub_date = timezone.datetime.now()
         blog.save()
         return redirect('/blog/' + str(blog.id))
+
+def blogpost(request):
+        # 입력된 내용 처리 -> POST
+        if request.method == 'POST':
+                form = BlogPost(request.POST)
+
+                if form.is_valid(): # 잘입력된지 체크
+                        post = form.save(commit=False)
+                        post.pub_date = timezone.now()
+                        post.username = request.user.username
+                        post.save() # 저장하기
+                        return redirect('home') # 홈으로
+
+
+        # 빈 페이지 띄워주는 기능 -> GET
+        else :
+                form = BlogPost()
+                return render(request, 'new.html', {'form':form})
+
+def newreply(request):
+        if request.method == 'POST':
+                comment = Comment()
+                comment.comment_body = request.POST['comment_body']
+                comment.blog = Blog.objects.get(pk=request.POST['blog']) # id로 객체 가져오기        
+                comment.comment_user = request.user.username
+                comment.save()
+                return redirect('/blog/'+ str(comment.blog.id))
+        else :
+                return redirect('home') # 홈으로

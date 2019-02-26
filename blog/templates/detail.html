@@ -3,9 +3,20 @@
 <div class="conatiner">
     <h1> {{blog.title}} </h1>
     <p> {{blog.pub_date}} </p>
-    <p> {{blog.body}} </p>
+    <p>{{blog.description|safe}}</p>
     <br><br>
 </div>
+
+<form method="POST" action="/blog/newreply">
+    {% csrf_token %}
+    <input type="hidden" value="{{blog.id}}" name="blog">
+    댓글 작성 : <input type="text" name="comment_body"></input>
+    <button type="submit" class="btn btn-secondary">작성</button>
+</form>
+
+{% for comment in blog.comments.all %}
+    <p> <span> {{comment.comment_user}} </span> : {{ comment.comment_body }} </p>
+{% endfor %}
 
 <a href="{%url 'home'%}">HOME</a>
 

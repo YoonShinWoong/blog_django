@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
-
+{% load socialaccount %}
+{% providers_media_js %}
 {% block content %}
 
 {% if error %}
@@ -23,6 +24,7 @@
     <br>
     <br>
     <input class="btn btn-primary" type="submit" value="Login">
+    <a href="{% provider_login_url 'google' %}"> 구글 로그인 </a>
 </form>
 
 {% endblock %}

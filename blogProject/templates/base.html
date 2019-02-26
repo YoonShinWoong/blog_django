@@ -1,4 +1,5 @@
 <header>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
 </header>
 
@@ -15,7 +16,7 @@
                 <a class="nav-link" href="{% url 'home' %}">Home</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{% url 'new' %}">New Post</a>
+                <a class="nav-link" href="{% url 'newblog' %}">New Post</a>
             </li>
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="{% url 'portfolio'%}" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -47,3 +48,16 @@
         {% endblock %}
     </div>
 </body>
+<footer>
+    <div class="conatiner" style="height:10%;width:100%;background-color: white;text-align: center;">
+            <a href="https://github.com/YoonShinWoong" style="color:black;"><i class="fab fa-github" style="font-size:20px;"></i> Github</a> &nbsp;&nbsp; 
+            <a href="https://woongsin94.tistory.com/" style="color:black;"><i class="fas fa-blog" style="font-size:20px;"></i> Blog </a>
+    </div>
+</footer>
+
+<style>
+    @font-face { font-family: 'BMJUA'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/BMJUA.woff') format('woff'); font-weight: normal; font-style: normal; }
+    body{
+        font-family:'BMJUA';        
+    }
+</style>
