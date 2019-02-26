@@ -3,6 +3,7 @@
 <div class="conatiner">
     <h1> {{blog.title}} </h1>
     <p> {{blog.pub_date}} </p>
+    <hr>
     <p>{{blog.description|safe}}</p>
     <br><br>
 </div>
@@ -19,5 +20,8 @@
 {% endfor %}
 
 <a href="{%url 'home'%}">HOME</a>
+{% if user.username == blog.username %}
+<a href="{%url 'blogedit' blog.id %}">EDIT</a>
+{% endif %}
 
 {% endblock%}

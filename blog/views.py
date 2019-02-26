@@ -60,6 +60,27 @@ def blogpost(request):
                 form = BlogPost()
                 return render(request, 'new.html', {'form':form})
 
+def blogedit(request, blog_id):
+        # 객체 가져오기
+        blog = get_object_or_404(Blog, pk=blog_id)
+
+        # 유저 다르면 돌려보내기
+        if blog.username != request.user.username:
+                return redirect('home')
+
+        # 입력된 내용 처리 -> POST
+        if request.method == 'POST':
+                form = BlogPost(request.POST or None, instance=blog)
+                if form.is_valid(): # 잘입력된지 체크
+                        post = form.save(commit=False)
+                        post.save() # 저장하기
+                        return redirect('/blog/'+str(blog.id))
+
+        # 빈 페이지 띄워주는 기능 -> GET
+        else :
+                form = BlogPost(instance=blog)
+                return render(request, 'blog/edit.html', {'blog':blog,'form':form})
+
 def newreply(request):
         if request.method == 'POST':
                 comment = Comment()
